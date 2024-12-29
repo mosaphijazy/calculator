@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ar"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>My front page</title> 
+  <style>
+    body {
+    background-color: #000000; /* لون الخلفية */
+    color: rgb(244, 6, 6); /* لون النص */
+    font-family: Arial, sans-serif; /* نوع الخط */
+}
+h3 {
+    color: #ff6347; /* لون العنوان */
+}
+p {
+    color: #001BFF; /* لون الفقرة */
+}
+
+/* تنسيق الأزرار */
+.button-container {
+    display: grid; /* استخدام Grid */
+    grid-template-columns: repeat(3, 1fr); /* إنشاء 3 أعمدة */
+    gap: 10px; /* إضافة مسافة بين الأزرار */
+}
+
+/* تنسيق الأزرار */
+button {
+    background-color: #4CAF50; /* لون الخلفية */
+    color: white; /* لون النص */
+    padding: 10px 10px; /* مساحة داخلية */
+    border: none; /* إزالة الحواف */
+    border-radius: 50%; /* الزوايا المدورة */
+    font-size: 16px; /* حجم النص */
+    cursor: pointer; /* مؤشر الفأرة */
+}
+  </style> 
+ </head> 
+ <body> 
+  <h3>Hello, my name is Mosab, and this is my first website</h3> 
+  <p>... بدايتي</p> 
+  <div class="button-container"> <button onclick="printNumber(1)">1</button> <button onclick="printNumber(2)">2</button> <button onclick="printNumber(3)">3</button> <button onclick="printNumber(4)">4</button> <button onclick="printNumber(5)">5</button> <button onclick="printNumber(6)">6</button> <button onclick="printNumber(7)">7</button> <button onclick="printNumber(8)">8</button> <button onclick="printNumber(9)">9</button> <button onclick="printNumber(0)">0</button> 
+  </div> 
+  <div class="operation-container"> <button onclick="calculate('+')">جمع</button> <button onclick="calculate('*')">ضرب</button> <button onclick="calculate('-')">طرح</button> <button onclick="calculate('/')">قسمة</button> <button onclick="clearDisplay()">مسح</button> <!-- زر المسح --> <button onclick="calculateResult()">=</button> <!-- زر التساوي --> 
+  </div> 
+  <p id="output">الرقم الحالي: </p> 
+  <script>
+    let currentNumber = ""; // لتخزين الرقم الحالي
+    let result = 0;         // لتخزين النتيجة النهائية
+    let operation = "";     // لتخزين العملية الحسابية
+
+    // دالة لإضافة الرقم إلى الرقم الحالي
+    function printNumber(number) {
+        currentNumber += number;
+        document.getElementById("output").innerText = "الرقم الحالي: " + currentNumber;
+    }
+
+    // مسح الرقم الحالي
+    function clearDisplay() {
+        currentNumber = "";
+        result = 0;
+        operation = "";
+        document.getElementById("output").innerText = "الرقم الحالي: " + currentNumber;
+    }
+
+    // إجراء العملية الحسابية
+    function calculate(op) {
+        if (currentNumber !== "") {
+            let currentNum = parseFloat(currentNumber);
+            if (isNaN(currentNum)) {
+                document.getElementById("output").innerText = "الرقم غير صحيح!";
+                return;
+            }
+
+            if (operation === "") {
+                result = currentNum;
+            } else {
+                switch (operation) {
+                    case "+":
+                        result += currentNum;
+                        break;
+                    case "-":
+                        result -= currentNum;
+                        break;
+                    case "*":
+                        result *= currentNum;
+                        break;
+                    case "/":
+                        if (currentNum === 0) {
+                            document.getElementById("output").innerText = "لا يمكن القسمة على صفر!";
+                            return;
+                        }
+                        result /= currentNum;
+                        break;
+                }
+            }
+
+            currentNumber = ""; 
+            operation = op;     
+            document.getElementById("output").innerText = "النتيجة: " + result;
+        }
+    }
+
+    // حساب النتيجة عند الضغط على زر التساوي
+    function calculateResult() {
+        if (currentNumber !== "") {
+            let currentNum = parseFloat(currentNumber);
+            if (isNaN(currentNum)) {
+                document.getElementById("output").innerText = "الرقم غير صحيح!";
+                return;
+            }
+
+            switch (operation) {
+                case "+":
+                    result += currentNum;
+                    break;
+                case "-":
+                    result -= currentNum;
+                    break;
+                case "*":
+                    result *= currentNum;
+                    break;
+                case "/":
+                    if (currentNum === 0) {
+                        document.getElementById("output").innerText = "لا يمكن القسمة على صفر!";
+                        return;
+                    }
+                    result /= currentNum;
+                    break;
+                default:
+                    document.getElementById("output").innerText = "يرجى اختيار عملية.";
+                    return;
+            }
+
+            currentNumber = ""; // إعادة الرقم الحالي ليتم إدخال رقم جديد
+            operation = ""; // إعادة العملية فارغة بعد الحساب
+            document.getElementById("output").innerText = "النتيجة: " + result;
+        }
+    }
+  </script> 
+ 
+</body></html>
